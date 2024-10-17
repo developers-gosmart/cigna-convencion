@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tabla de Datos</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css"
+    />
+    <style>
+      #preloader {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+      }
+
+      .loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid #3498db;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      p {
+        border-bottom: 1px solid #000000;
+        height: 0;
+        line-height: 28px;
+        margin: 0 0 15px;
+        padding-bottom: 15px;
+        text-align: Center;
+      }
+    </style>
+  </head>
+
+  <body class="container-fluid">
+    <div id="preloader">
+      <div class="loader"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <button id="modalAgregarBtn" class="btn btn-primary mt-3 mb-4">
+          Agregar
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table
+        id="tablaDatos"
+        class="table table-striped table-bordered"
+        style="width: 100%"
+      >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>2&#186; Nombre</th>
+            <th>Apellido</th>
+            <th>Cigna</th>
+            <th>Ciudad</th>
+            <th>Estado</th>
+            <th>Nacionalidad</th>
+            <th>Nivel</th>
+            <th>Empresa</th>
+            <th>Posición</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Dirección</th>
+            <th>Ciudad de Dirección</th>
+            <th>Estado de Dirección</th>
+            <th>Código Postal</th>
+            <th>Sitio Web</th>
+            <th>Sorteo</th>
+            <th>Evento</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <div
+      id="validacionModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="validacionModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="validacionModalLabel">Validación</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-3">
+                  <label for="nombre"> Ingrese el Código</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="buscar_telefono"
+                    name="buscar_telefono"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-3">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="confirmarBtn"
+                  >
+                    Confirmar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="editarModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="editarModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editarModalLabel">Editar Registro</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Aquí puedes agregar los campos de edición -->
+            <form id="editarForm">
+              <input type="hidden" id="registroId" name="registroId" />
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Primer Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nombre"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group mb-3">
+                    <label for="nombre">2&#186; Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inicial_segundo_nombre"
+                      maxlength="1"
+                      name="nombre"
+                      placeholder="Inicial"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Primer Apellido</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="apellido"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Nivel</label>
+                    <select class="form-select" id="nivel">
+                      <option value="INVITADO">INVITADO</option>
+                      <option value="AGENTE CIGNA">AGENTE CIGNA</option>
+                      <option value="DIVISION MKT DIRECTOR">
+                        DIVISION MKT DIRECTOR
+                      </option>
+                      <option value="DIVISION MKT DIRECTOR II">
+                        DIVISION MKT DIRECTOR II
+                      </option>
+                      <option value="NATIONAL DIRECTOR">
+                        NATIONAL DIRECTOR
+                      </option>
+                      <option value="SR MKT DIRECTOR II">
+                        SR MKT DIRECTOR II
+                      </option>
+                      <option value="SR MKT DIRECTOR">SR MKT DIRECTOR</option>
+                      <option value="MARKET DIRECTOR II">
+                        MARKET DIRECTOR II
+                      </option>
+                      <option value="MARKET DIRECTOR">MARKET DIRECTOR</option>
+                      <option value="TEAM LEADER">TEAM LEADER</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Ciudad</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="ciudad"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Estado</label>
+                    <select class="form-select" id="estado">
+                      <option value="AL">AL</option>
+                      <option value="AK">AK</option>
+                      <option value="AS">AS</option>
+                      <option value="AZ">AZ</option>
+                      <option value="AR">AR</option>
+                      <option value="CA">CA</option>
+                      <option value="CO">CO</option>
+                      <option value="CT">CT</option>
+                      <option value="DE">DE</option>
+                      <option value="DC">DC</option>
+                      <option value="FM">FM</option>
+                      <option value="FL">FL</option>
+                      <option value="GA">GA</option>
+                      <option value="GU">GU</option>
+                      <option value="HI">HI</option>
+                      <option value="ID">ID</option>
+                      <option value="IL">IL</option>
+                      <option value="IN">IN</option>
+                      <option value="IA">IA</option>
+                      <option value="KS">KS</option>
+                      <option value="KY">KY</option>
+                      <option value="LA">LA</option>
+                      <option value="ME">ME</option>
+                      <option value="MH">MH</option>
+                      <option value="MD">MD</option>
+                      <option value="MA">MA</option>
+                      <option value="MI">MI</option>
+                      <option value="MN">MN</option>
+                      <option value="MS">MS</option>
+                      <option value="MO">MO</option>
+                      <option value="MT">MT</option>
+                      <option value="NE">NE</option>
+                      <option value="NV">NV</option>
+                      <option value="NH">NH</option>
+                      <option value="NJ">NJ</option>
+                      <option value="NM">NM</option>
+                      <option value="NY">NY</option>
+                      <option value="NC">NC</option>
+                      <option value="ND">ND</option>
+                      <option value="MP">MP</option>
+                      <option value="OH">OH</option>
+                      <option value="OK">OK</option>
+                      <option value="OR">OR</option>
+                      <option value="PW">PW</option>
+                      <option value="PA">PA</option>
+                      <option value="PR">PR</option>
+                      <option value="RI">RI</option>
+                      <option value="SC">SC</option>
+                      <option value="SD">SD</option>
+                      <option value="TN">TN</option>
+                      <option value="TX">TX</option>
+                      <option value="UT">UT</option>
+                      <option value="VT">VT</option>
+                      <option value="VI">VI</option>
+                      <option value="VA">VA</option>
+                      <option value="WA">WA</option>
+                      <option value="WV">WV</option>
+                      <option value="WI">WI</option>
+                      <option value="WY">WY</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Nacionalidad</label>
+                    <select class="form-select" id="nacionalidad">
+                      <option value="Canada">Canada</option>
+                      <option value="USA">USA</option>
+                      <option value="Argentina">Argentina</option>
+                      <option value="Bahamas">Bahamas</option>
+                      <option value="Barbados">Barbados</option>
+                      <option value="Belice">Belice</option>
+                      <option value="Bolivia">Bolivia</option>
+                      <option value="Brasil">Brasil</option>
+                      <option value="Colombia">Colombia</option>
+                      <option value="Costa Rica">Costa Rica</option>
+                      <option value="Cuba">Cuba</option>
+                      <option value="Chile">Chile</option>
+                      <option value="Dominica">Dominica</option>
+                      <option value="Ecuador">Ecuador</option>
+                      <option value="El Salvador">El Salvador</option>
+                      <option value="Granada">Granada</option>
+                      <option value="Guatemala">Guatemala</option>
+                      <option value="Guyana">Guyana</option>
+                      <option value="Haití">Haití</option>
+                      <option value="Honduras">Honduras</option>
+                      <option value="Jamaica">Jamaica</option>
+                      <option value="México">México</option>
+                      <option value="Nicaragua">Nicaragua</option>
+                      <option value="Panamá">Panamá</option>
+                      <option value="Paraguay">Paraguay</option>
+                      <option value="Perú">Perú</option>
+                      <option value="República Dominicana">
+                        República Dominicana
+                      </option>
+                      <option value="Uruguay">Uruguay</option>
+                      <option value="Venezuela">Venezuela</option>
+                      <option value="San Cristóbal y Nieves">
+                        San Cristóbal y Nieves
+                      </option>
+                      <option value="San Vicente y las Granadinas">
+                        San Vicente y las Granadinas
+                      </option>
+                      <option value="Santa Lucía">Santa Lucía</option>
+                      <option value="Surinam">Surinam</option>
+                      <option value="Trinidad y Tobago">
+                        Trinidad y Tobago
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Código CIGNA</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="12"
+                      id="codigo_cigna"
+                      name="codigo_cigna"
+                    />
+                  </div>
+                </div>
+              </div>
+              <p class="mb-5 mt-3">
+                <span style="background-color: white"
+                  >Información de Negocio</span
+                >
+              </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="nombre"
+                      >Nombre Empresa o Agencia(si aplica)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="empresa"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Posición o Cargo</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="posicion"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Teléfono</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="telefono"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Email</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Dirección</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="direccion"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Ciudad</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="ciudad_direccion"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Estado</label>
+                    <select class="form-select" id="estado_direccion">
+                      <option value="AL">AL</option>
+                      <option value="AK">AK</option>
+                      <option value="AS">AS</option>
+                      <option value="AZ">AZ</option>
+                      <option value="AR">AR</option>
+                      <option value="CA">CA</option>
+                      <option value="CO">CO</option>
+                      <option value="CT">CT</option>
+                      <option value="DE">DE</option>
+                      <option value="DC">DC</option>
+                      <option value="FM">FM</option>
+                      <option value="FL">FL</option>
+                      <option value="GA">GA</option>
+                      <option value="GU">GU</option>
+                      <option value="HI">HI</option>
+                      <option value="ID">ID</option>
+                      <option value="IL">IL</option>
+                      <option value="IN">IN</option>
+                      <option value="IA">IA</option>
+                      <option value="KS">KS</option>
+                      <option value="KY">KY</option>
+                      <option value="LA">LA</option>
+                      <option value="ME">ME</option>
+                      <option value="MH">MH</option>
+                      <option value="MD">MD</option>
+                      <option value="MA">MA</option>
+                      <option value="MI">MI</option>
+                      <option value="MN">MN</option>
+                      <option value="MS">MS</option>
+                      <option value="MO">MO</option>
+                      <option value="MT">MT</option>
+                      <option value="NE">NE</option>
+                      <option value="NV">NV</option>
+                      <option value="NH">NH</option>
+                      <option value="NJ">NJ</option>
+                      <option value="NM">NM</option>
+                      <option value="NY">NY</option>
+                      <option value="NC">NC</option>
+                      <option value="ND">ND</option>
+                      <option value="MP">MP</option>
+                      <option value="OH">OH</option>
+                      <option value="OK">OK</option>
+                      <option value="OR">OR</option>
+                      <option value="PW">PW</option>
+                      <option value="PA">PA</option>
+                      <option value="PR">PR</option>
+                      <option value="RI">RI</option>
+                      <option value="SC">SC</option>
+                      <option value="SD">SD</option>
+                      <option value="TN">TN</option>
+                      <option value="TX">TX</option>
+                      <option value="UT">UT</option>
+                      <option value="VT">VT</option>
+                      <option value="VI">VI</option>
+                      <option value="VA">VA</option>
+                      <option value="WA">WA</option>
+                      <option value="WV">WV</option>
+                      <option value="WI">WI</option>
+                      <option value="WY">WY</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="nombre">C. Postal</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="codigo_postal"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group mb-3">
+                    <label for="nombre">Sitio Web</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="sitio_web"
+                      name="nombre"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="sorteo"
+                    />
+                    <label class="form-check-label" for="sorteo">
+                      Sorteo
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="evento"
+                    />
+                    <label class="form-check-label" for="evento">
+                      Evento
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer mb-3">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="guardarCambiosBtn"
+            >
+              Guardar Cambios
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script>
+      var preloader = document.getElementById("preloader");
+      var turno = 1;
+
+      $(document).ready(function () {
+        $("#buscar_telefono").keydown(function (event) {
+          if (event.keyCode == 13) {
+            event.preventDefault(); // Esto evita que se realice la acción por defecto del "Enter" en el input
+            if (event.target.value == "12369") {
+              $("#editarModal").modal("show");
+              $("#validacionModal").modal("hide");
+            }
+          }
+        });
+
+        var tabla = $("#tablaDatos").DataTable({
+          processing: true,
+          language: {
+            search: "Buscar:",
+            info: "Mostrando la página _PAGE_ de _PAGES_",
+            paginate: {
+              first: "Primero",
+              last: "Ultimo",
+              next: "Siguiente",
+              previous: "Anterior",
+            },
+            buttons: {
+              pageLength: {
+                _: "Mostrar %d elementos",
+              },
+            },
+          },
+          dom: "Bfrtip",
+          buttons: [
+            "pageLength",
+            {
+              extend: "csvHtml5",
+            },
+            {
+              text: "Sorteo",
+              action: function (e, dt, node, config) {
+                seleccionarFilaAleatoria();
+              },
+            },
+          ],
+          ajax: {
+            url: "https://gosmartgroup.us/app/cignaConvencion.php",
+            data: {
+              accion: "obtenerRegistrosPaginados",
+              pagina: 0,
+              filtro: "",
+            },
+          },
+          columns: [
+            { data: "id", visible: false },
+            {
+              data: null,
+              render: function (data, type, row) {
+                return completarConCeros(data.id);
+              },
+            },
+            { data: "nombre" },
+            { data: "inicial_segundo_nombre" },
+            { data: "apellido" },
+            { data: "codigo_cigna" },
+            { data: "ciudad" },
+            { data: "estado" },
+            { data: "nacionalidad" },
+            { data: "nivel", visible: false },
+            { data: "empresa", visible: false },
+            { data: "posicion", visible: false },
+            { data: "telefono" },
+            { data: "email" },
+            { data: "direccion", visible: false },
+            { data: "ciudad_direccion", visible: false },
+            { data: "estado_direccion", visible: false },
+            { data: "codigo_postal", visible: false },
+            { data: "sitio_web", visible: false },
+            { data: "sorteo", visible: false },
+            {
+              data: null,
+              render: function (data, type, row) {
+                return data.evento == 1 ? "Registrado" : "Registrar";
+              },
+            },
+            {
+              data: null,
+              render: function (data, type, row) {
+                let color = "warning";
+                let nombreButton = "Registrar";
+                if (data.evento == 1) {
+                  color = "success";
+                  nombreButton = "Registrado";
+                }
+                return `<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <button type="button" class="registradoBtn btn btn-${color}">${nombreButton}</button>
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                      Más
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item editarBtn" href="#">Editar</a></li>
+                      <li><a class="dropdown-item eliminarBtn" href="#">Eliminar</a></li>
+                    </ul>
+                  </div>
+                </div>`;
+              },
+            },
+          ],
+          drawCallback: function (settings) {
+            console.log(settings.json);
+          },
+        });
+
+        $("#tablaDatos tbody").on("click", ".editarBtn", function () {
+          limpiar();
+          var data = tabla.row($(this).parents("tr")).data();
+          $("#registroId").val(data.id);
+          $("#nombre").val(data.nombre);
+          $("#inicial_segundo_nombre").val(data.inicial_segundo_nombre);
+          $("#apellido").val(data.apellido);
+          $("#ciudad").val(data.ciudad);
+          $("#estado").val(data.estado);
+          $("#nacionalidad").val(data.nacionalidad);
+          $("#codigo_cigna").val(data.codigo_cigna);
+          $("#empresa").val(data.empresa);
+          $("#nivel").val(data.nivel);
+          $("#posicion").val(data.posicion);
+          $("#telefono").val(data.telefono);
+          $("#email").val(data.email);
+          $("#direccion").val(data.direccion);
+          $("#ciudad_direccion").val(data.ciudad_direccion);
+          $("#estado_direccion").val(data.estado_direccion);
+          $("#codigo_postal").val(data.codigo_postal);
+          $("#sitio_web").val(data.sitio_web);
+          $("#sorteo").prop("checked", data.sorteo == 1);
+          $("#evento").prop("checked", data.evento == 1);
+          $("#validacionModal").modal("show");
+        });
+
+        $("#tablaDatos tbody").on("click", ".registradoBtn", function () {
+          var data = tabla.row($(this).parents("tr")).data();
+          if (data.evento == 0) {
+            preloader.style.display = "block";
+            $.ajax({
+              url: "https://gosmartgroup.us/app/cignaConvencion.php",
+              type: "POST",
+              data: {
+                accion: "actualizarEvento",
+                id: data.id,
+              },
+              success: function (response) {
+                tabla.ajax.reload();
+                preloader.style.display = "none";
+                Swal.fire({
+                  title: "exitoso",
+                  text: "Se registro exitosamente",
+                  icon: "success",
+                });
+              },
+              error: function (xhr, status, error) {
+                preloader.style.display = "none";
+                Swal.fire({
+                  title: "Error",
+                  text: "Hubo un error en la petición",
+                  icon: "error",
+                });
+              },
+            });
+          }
+        });
+
+        $("#tablaDatos tbody").on("click", ".eliminarBtn", function () {
+          Swal.fire({
+            title: "Usted esta seguro de eliminar el subcriptor?",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              preloader.style.display = "block";
+              var data = tabla.row($(this).parents("tr")).data();
+              $.ajax({
+                url: "https://gosmartgroup.us/app/cignaConvencion.php",
+                type: "POST",
+                data: {
+                  accion: "eliminarRegistro",
+                  id: data.id,
+                },
+                success: function (response) {
+                  console.log("antes", response);
+                  tabla.ajax.reload();
+                  console.log("despues", response);
+                  preloader.style.display = "none";
+                  Swal.fire({
+                    title: "exitoso",
+                    text: "exitoso",
+                    icon: "success",
+                  });
+                },
+                error: function (xhr, status, error) {
+                  // Manejar errores de la petición
+                  Swal.fire({
+                    title: "Error",
+                    text: "Hubo un error en la petición",
+                    icon: "error",
+                  });
+                },
+              });
+            }
+          });
+        });
+
+        $("#guardarCambiosBtn").click(function () {
+          preloader.style.display = "block";
+          var datos = {
+            id: $("#registroId").val(),
+            nombre: $("#nombre").val(),
+            inicial_segundo_nombre: $("#inicial_segundo_nombre").val(),
+            apellido: $("#apellido").val(),
+            ciudad: $("#ciudad").val(),
+            estado: $("#estado").val(),
+            nacionalidad: $("#nacionalidad").val(),
+            codigo_cigna: $("#codigo_cigna").val(),
+            empresa: $("#empresa").val(),
+            nivel: $("#nivel").val(),
+            posicion: $("#posicion").val(),
+            telefono: $("#telefono").val(),
+            email: $("#email").val(),
+            direccion: $("#direccion").val(),
+            ciudad_direccion: $("#ciudad_direccion").val(),
+            estado_direccion: $("#estado_direccion").val(),
+            codigo_postal: $("#codigo_postal").val(),
+            sitio_web: $("#sitio_web").val(),
+            sorteo: $("#sorteo").is(":checked") ? 1 : 0,
+            evento: $("#evento").is(":checked") ? 1 : 0,
+          };
+
+          let mensaje = "";
+          if ($("#registroId").val() != "") {
+            mensaje = "El registro ha sido actualizado exitosamente";
+          } else {
+            mensaje = "El registro ha sido ingresado exitosamente";
+          }
+
+          $.ajax({
+            url: "https://gosmartgroup.us/app/cignaConvencion.php",
+            type: "POST",
+            data: {
+              accion: "updateRegistro",
+              datos: datos,
+            },
+            success: function (response) {
+              console.log("antes", response);
+              tabla.ajax.reload();
+              console.log("despues", response);
+              preloader.style.display = "none";
+              Swal.fire({
+                title: "Actualizado",
+                text: mensaje,
+                icon: "success",
+              });
+            },
+            error: function (xhr, status, error) {
+              Swal.fire({
+                title: "Error",
+                text: "Hubo un error en la petición",
+                icon: "error",
+              });
+            },
+          });
+
+          // Cierra la modal
+          $("#editarModal").modal("hide");
+        });
+
+        $("#modalAgregarBtn").click(function () {
+          limpiar();
+          $("#validacionModal").modal("show");
+        });
+
+        $("#confirmarBtn").click(function () {
+          if ($("#buscar_telefono").val() == "12369") {
+            $("#editarModal").modal("show");
+            $("#validacionModal").modal("hide");
+          }
+        });
+
+        function seleccionarFilaAleatoria() {
+          var data = tabla.rows().data();
+
+          switch (turno) {
+            case 1:
+              var resultado = data.filter(
+                (objeto) =>
+                  objeto.evento === "1" && objeto.id >= 1 && objeto.id <= 25
+              );
+              break;
+            case 2:
+              var resultado = data.filter(
+                (objeto) =>
+                  objeto.evento === "1" && objeto.id >= 26 && objeto.id <= 100
+              );
+              break;
+            case 3:
+              var resultado = data.filter(
+                (objeto) =>
+                  objeto.evento === "1" && objeto.id >= 1 && objeto.id <= 30
+              );
+              break;
+            case 4:
+            case 5:
+              var resultado = data.filter((objeto) => objeto.evento === "1");
+              break;
+            case 6:
+              var resultado = data.filter(
+                (objeto) =>
+                  objeto.evento === "1" && objeto.id >= 1 && objeto.id <= 60
+              );
+              break;
+            case 7:
+            case 8:
+              var resultado = data.filter((objeto) => objeto.evento === "1");
+              break;
+            case 9:
+              var resultado = data.filter(
+                (objeto) => objeto.evento === "1" && objeto.id <= 100
+              );
+              break;
+
+            default:
+              var resultado = data.filter((objeto) => objeto.evento === "1");
+              break;
+          }
+          turno++;
+
+          var filaAleatoria = Math.floor(Math.random() * resultado.length);
+
+          var filaSeleccionada = resultado[filaAleatoria];
+          Swal.fire({
+            title: "Participante",
+            html: `<h2><strong>${completarConCeros(filaSeleccionada.id)} - ${
+              filaSeleccionada.nombre
+            } ${filaSeleccionada.apellido}</strong></h2>`,
+            icon: "success",
+          });
+        }
+      });
+
+      function completarConCeros(cadena) {
+        while (cadena.length < 3) {
+          cadena = "0" + cadena;
+        }
+        return cadena;
+      }
+
+      function limpiar() {
+        $("#registroId").val("");
+        $("#nombre").val("");
+        $("#inicial_segundo_nombre").val("");
+        $("#apellido").val("");
+        $("#ciudad").val("");
+        $("#estado").val("");
+        $("#nacionalidad").val("");
+        $("#codigo_cigna").val("");
+        $("#empresa").val("");
+        $("#nivel").val("");
+        $("#posicion").val("");
+        $("#telefono").val("");
+        $("#email").val("");
+        $("#direccion").val("");
+        $("#ciudad_direccion").val("");
+        $("#estado_direccion").val("");
+        $("#codigo_postal").val("");
+        $("#sitio_web").val("");
+        $("#sorteo").prop("checked", false);
+        $("#evento").prop("checked", false);
+        $("#buscar_telefono").val("");
+      }
+    </script>
+  </body>
+</html>
