@@ -4,7 +4,7 @@ const fullName = document.getElementById("full-name");
 const phone = document.getElementById("phone");
 const email = document.getElementById("email");
 const vip = document.getElementById("vip");
-const takeout = document.getElementById ("eat");
+const takeout = document.getElementById("eat");
 const startScanButton = document.getElementById("start-scan");
 
 let scanning = false;
@@ -67,23 +67,21 @@ function scanQRCode() {
 
     const options = {
       method: "GET",
-      accion: 'buscarPorTelefono',
-      telefono: '04242051495'
+      code: 'mNHVzdEvvA8sn4RZ'
     };
-    
-    fetch("/cignaConvencion.php", options)
+
+    fetch("https://wscigna.gosmartcrm.com:9000/suscripcion/code", options)
       .then(response => response.text())
       .then(data => {
+        // fullName.textContent = data.full_name;
+        // phone.textContent = data.phone;
+        // email.textContent = data.email;
+        // vip.textContent = data.is_vip ? 'Si' : 'No';
+        // takeout.textContent = data.eat;
+        // scanning = false;
+        // video.srcObject.getTracks().forEach((track) => track.stop());
         console.log(data)
       });
-
-    fullName.textContent = data.full_name;
-    phone.textContent = data.phone;
-    email.textContent = data.email;
-    vip.textContent = data.is_vip ? 'Si': 'No';
-    takeout.textContent = data.eat;
-    scanning = false;
-    video.srcObject.getTracks().forEach((track) => track.stop());
   }
 
   if (scanning) {
