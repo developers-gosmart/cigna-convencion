@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#4CAF50" />
+    <title>Lector QR PWA</title>
+    <meta name="description" content="PWA para leer códigos QR" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="manifest" href="manifest.json">
+  </head>
+  <body>
+    <div class="container">
+      <img src="assets/image/qr_cigna.webp" alt="Descripción de la imagen" class="responsive-img">
+      <video
+        id="qr-video"
+        style="border: 2px solid black"
+      ></video>
+      <button id="start-scan">Iniciar Escaneo QR</button>
+      <p>
+        <strong>Nombre Completo:</strong>
+        <span id="full-name"></span>
+      </p>
+      <p>
+        <strong>Telefono:</strong>
+        <span id="phone"></span>
+      </p>
+      <p>
+        <strong>email:</strong>
+        <span id="email"></span>
+      </p>
+      <p>
+        <strong>VIP:</strong>
+        <span id="vip"></span>
+      </p>
+      <p>
+        <strong>Comida:</strong>
+        <span id="eat"></span>
+      </p>
+      <button id="start-scan">Registrar</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.3.1/dist/jsQR.min.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

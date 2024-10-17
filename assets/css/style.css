@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+video {
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+strong {
+    text-transform: uppercase;
+}
+
+p {
+    text-align: left;
+    padding-left: 1rem;
+}
+
+.responsive-img {
+    width: 100%;
+    max-width: 356px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
