@@ -65,6 +65,18 @@ function scanQRCode() {
   if (code) {
     const data = JSON.parse(code.data);
 
+    const options = {
+      method: "GET",
+      accion: 'buscarPorTelefono',
+      telefono: '04242051495'
+    };
+    
+    fetch("/cignaConvencion.php", options)
+      .then(response => response.text())
+      .then(data => {
+        console.log(data)
+      });
+
     fullName.textContent = data.full_name;
     phone.textContent = data.phone;
     email.textContent = data.email;
