@@ -5,7 +5,11 @@ const phone = document.getElementById("phone");
 const email = document.getElementById("email");
 const vip = document.getElementById("vip");
 const takeout = document.getElementById("eat");
+const message = document.getElementById("message");
+var id = 0;
 const startScanButton = document.getElementById("start-scan");
+const registerButton = document.getElementById("register");
+var oldCode = "";
 
 let scanning = false;
 
@@ -15,7 +19,6 @@ if ("serviceWorker" in navigator) {
       .register("service-worker.js")
       .then((registration) => {
         console.log("Service Worker registrado con éxito:", registration);
-        getInitToken(registration);
       })
       .catch((error) => {
         console.error("Error al registrar el Service Worker:", error);
@@ -24,6 +27,26 @@ if ("serviceWorker" in navigator) {
 } else {
   console.log("Service Worker no soportado");
 }
+
+registerButton.addEventListener("click", () => {
+  const url = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/event";
+  const params = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+    }),
+  };
+
+  fetch(url, params)
+    .then((response) => response.text())
+    .then((response) => {
+      const data = JSON.parse(response);
+      if (data.code == 200) message.textContent = "Registrado exitosamente";
+    });
+});
 
 // Al hacer clic en el botón, iniciamos el escaneo QR
 startScanButton.addEventListener("click", () => {
@@ -63,24 +86,33 @@ function scanQRCode() {
   const code = jsQR(imageData.data, canvas.width, canvas.height);
 
   if (code) {
-    const data = JSON.parse(code.data);
+    let data = code.data;
+    if (oldCode === data) return;
+    else oldCode = data;
 
-    const options = {
-      method: "GET",
-      code: 'mNHVzdEvvA8sn4RZ'
+    let baseUrl = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/code";
+    let params = {
+      code: data,
     };
 
-    fetch("https://wscigna.gosmartcrm.com:9000/suscripcion/code", options)
-      .then(response => response.text())
-      .then(data => {
-        // fullName.textContent = data.full_name;
-        // phone.textContent = data.phone;
-        // email.textContent = data.email;
-        // vip.textContent = data.is_vip ? 'Si' : 'No';
-        // takeout.textContent = data.eat;
-        // scanning = false;
-        // video.srcObject.getTracks().forEach((track) => track.stop());
-        console.log(data)
+    // Construir la cadena de parámetros
+    let queryString = new URLSearchParams(params).toString();
+    let url = `${baseUrl}?${queryString}`;
+
+    fetch(url)
+      .then((response) => response.text())
+      .then((response) => {
+        const data = JSON.parse(response);
+        const user = data.data;
+        id = user.id;
+        fullName.textContent = user.nombre_completo;
+        phone.textContent = user.telefono;
+        email.textContent = user.email;
+        vip.textContent = user.is_vip ? "Si" : "No";
+        takeout.textContent = user.meal;
+        scanning = false;
+        video.srcObject.getTracks().forEach((track) => track.stop());
+        oldCode = "";
       });
   }
 
