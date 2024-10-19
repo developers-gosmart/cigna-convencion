@@ -13,21 +13,6 @@ var oldCode = "";
 
 let scanning = false;
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("service-worker.js")
-      .then((registration) => {
-        console.log("Service Worker registrado con éxito:", registration);
-      })
-      .catch((error) => {
-        console.error("Error al registrar el Service Worker:", error);
-      });
-  });
-} else {
-  console.log("Service Worker no soportado");
-}
-
 registerButton.addEventListener("click", () => {
   const url = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/event";
   const params = {
