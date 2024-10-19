@@ -8,10 +8,10 @@ lotteryButton.addEventListener("click", () => {
         .then((response) => response.text())
         .then((response) => {
             const data = JSON.parse(response);
-            if (data.code == 210) {
+            if (data.code == 200) {
                 Swal.fire({
                     title: "Participante",
-                    html: `<h2><strong>${completarConCeros(10)} - ${data.data.nombre
+                    html: `<h2><strong>${completarConCeros(data.data.id)} - ${data.data.nombre
                         } ${data.data.apellido}</strong></h2>`,
                     icon: "success",
                 });
