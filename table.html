@@ -666,12 +666,12 @@
             {
               text: "Sorteo",
               action: function (e, dt, node, config) {
-                seleccionarFilaAleatoria();
+                window.location.href = "lottery.html";
               },
             },
           ],
           ajax: {
-            url: "https://gosmartgroup.us/app/cignaConvencion.php",
+            url: "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/list",
             dataSrc: "data",
             data: {
               accion: "obtenerRegistrosPaginados",
