@@ -8,6 +8,21 @@ lotteryButton.addEventListener("click", () => {
         .then((response) => response.text())
         .then((response) => {
             const data = JSON.parse(response);
-            if (data.code == 200) message.textContent = `el ganador es ${data.data.id}`;
+            if (data.code == 210) {
+                Swal.fire({
+                    title: "Participante",
+                    html: `<h2><strong>${completarConCeros(10)} - ${data.data.nombre
+                        } ${data.data.apellido}</strong></h2>`,
+                    icon: "success",
+                });
+                $(".swal2-container").css('background-image', 'url("assets/image/7I2Io9.gif")');
+            }
         });
 });
+
+function completarConCeros(cadena) {
+    while (cadena.length < 3) {
+        cadena = "0" + cadena;
+    }
+    return cadena;
+}
