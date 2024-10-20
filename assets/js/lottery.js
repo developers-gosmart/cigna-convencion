@@ -1,28 +1,18 @@
-const lotteryButton = document.getElementById('lottery');
-const message = document.getElementById('message');
+const lotteryButton = document.getElementById('lottery-button');
+const winner = document.getElementById('winner');
 
 lotteryButton.addEventListener("click", () => {
     const url = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/lottery";
+
+    winner.textContent = '';
 
     fetch(url)
         .then((response) => response.text())
         .then((response) => {
             const data = JSON.parse(response);
             if (data.code == 200) {
-                Swal.fire({
-                    title: "Participante",
-                    html: `<h2><strong>${completarConCeros(data.data.id)} - ${data.data.nombre
-                        } ${data.data.apellido}</strong></h2>`,
-                    icon: "success",
-                });
-                $(".swal2-container").css('background-image', 'url("assets/image/7I2Io9.gif")');
+                winner.textContent = `${data.data.nombre
+                    } ${data.data.apellido}`;
             }
         });
 });
-
-function completarConCeros(cadena) {
-    while (cadena.length < 3) {
-        cadena = "0" + cadena;
-    }
-    return cadena;
-}
