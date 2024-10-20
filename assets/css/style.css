@@ -17,6 +17,11 @@ button {
     cursor: pointer;
 }
 
+#register {
+    font-size: 24px;
+    padding: 1rem 2rem;
+}
+
 button:hover {
     background-color: #45a049;
 }
