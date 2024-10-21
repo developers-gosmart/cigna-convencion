@@ -4,7 +4,7 @@
     "description": "3ra CONVENCIÓN WEST PALM - FL OCTUBRE 2024",
     "start_url": "/cigna-convencion/",
     "display": "standalone",
-    "background_color": "#000",
+    "background_color": "#2c2d2f",
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
     "icons": [
