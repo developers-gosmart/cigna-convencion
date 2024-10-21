@@ -4,8 +4,13 @@ body {
 }
 
 .container {
+    font-size: 18px;
     max-width: 400px;
     margin: 0 auto;
+}
+
+video {
+    border: 2px solid black;
 }
 
 button {
@@ -18,7 +23,6 @@ button {
 }
 
 #register {
-    font-size: 24px;
     padding: 1rem 2rem;
 }
 
@@ -38,6 +42,10 @@ strong {
 p {
     text-align: left;
     padding-left: 1rem;
+    margin-top: 10px;
+    span {
+        font-size: 20px;
+    }
 }
 
 .responsive-img {
