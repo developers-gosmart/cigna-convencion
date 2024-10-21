@@ -60,10 +60,9 @@ button:hover {
     background-color: #218838;
 }
 
-.empower-section p {
-    color: #d4af37;
-    font-family: "Shadows Into Light", cursive;
-    font-size: 54px;
+.empower-section {
+    max-width: 100%;
+    height: auto;
 }
 
 .parpadea {
