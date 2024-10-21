@@ -40,6 +40,7 @@ strong {
 }
 
 p {
+    margin: 10px 0;
     text-align: left;
     padding-left: 1rem;
     margin-top: 10px;
@@ -56,6 +57,34 @@ p {
     margin: 0 auto;
 }
 
+#register {
+    margin: 10px;
+}
+
 #message {
     color: #45a049;
+}
+
+#message, #by {
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 0;
+    min-height: 21px;
+    text-align: center;
+}
+
+.go-smart {
+    color: #2c5aa0;
+}
+
+.group {
+    color: #ff9046;
+}
+
+#by,
+.go-smart,
+.group {
+    padding: 0;
+    display: inline; /* Para que estén en la misma línea */
+    margin: 0; /* Eliminar márgenes por defecto */
 }
