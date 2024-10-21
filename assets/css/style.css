@@ -88,3 +88,15 @@ p {
     display: inline; /* Para que estén en la misma línea */
     margin: 0; /* Eliminar márgenes por defecto */
 }
+
+.comida_chicken {
+    background-color: green;
+}
+
+.comida_west_palm {
+    background-color: red;
+}
+
+.comida_the_italian {
+    background-color: yellow;
+}

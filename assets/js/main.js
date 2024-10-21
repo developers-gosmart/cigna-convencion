@@ -95,6 +95,13 @@ function scanQRCode() {
         email.textContent = user.email;
         vip.textContent = user.is_vip ? "Si" : "No";
         takeout.textContent = user.meal;
+        if (user.meal.toUpperCase().includes("CHICKEN")) {
+          takeout.classList.add('comida_chicken');
+        } else if (user.meal.toUpperCase().includes("WEST PALM")) {
+          takeout.classList.add('comida_west_palm');
+        } else if (user.meal.toUpperCase().includes("THE ITALIAN")) {
+          takeout.classList.add('comida_the_italian');
+        }
         scanning = false;
         video.srcObject.getTracks().forEach((track) => track.stop());
         oldCode = "";
