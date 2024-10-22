@@ -45,7 +45,7 @@ $(document).ready(function () {
       {
         text: "Asistencia",
         action: function (e, dt, node, config) {
-          calcAsistencia();;
+          calcAsistencia();
         },
       },
     ],
@@ -323,13 +323,16 @@ $(document).ready(function () {
   });
 
   function calcAsistencia() {
-    var data = tabla.rows().data().toArray();
-    var count = data.filter(row => row.evento === 1).length;
-    Swal.fire({
-      title: "exitoso",
-      text: ` Asistencia: ${count}`,
-      icon: "success",
+    tabla.ajax.reload(function () {
+      var data = tabla.rows().data().toArray();
+      var count = data.filter(row => row.evento === 1).length;
+      Swal.fire({
+        title: "Asistencia!",
+        text: `Registrados: ${count}`,
+        icon: "success",
+      });
     });
+
   }
 });
 
