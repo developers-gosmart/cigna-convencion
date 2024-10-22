@@ -42,6 +42,12 @@ $(document).ready(function () {
           window.location.href = "lottery.html";
         },
       },
+      {
+        text: "Asistencia",
+        action: function (e, dt, node, config) {
+          calcAsistencia();;
+        },
+      },
     ],
     ajax: {
       url: "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/list",
@@ -315,6 +321,16 @@ $(document).ready(function () {
       $("#validacionModal").modal("hide");
     }
   });
+
+  function calcAsistencia() {
+    var data = tabla.rows().data().toArray();
+    var count = data.filter(row => row.evento === 1).length;
+    Swal.fire({
+      title: "exitoso",
+      text: ` Asistencia: ${count}`,
+      icon: "success",
+    });
+  }
 });
 
 function completarConCeros(cadena) {
