@@ -61,7 +61,7 @@ $(document).ready(function () {
         },
       },
       { data: "nombre" },
-      { data: "inicial_segundo_nombre", visible: false  },
+      { data: "inicial_segundo_nombre", visible: false },
       { data: "apellido" },
       { data: "codigo_cigna", visible: false },
       { data: "ciudad", visible: false },
@@ -146,7 +146,7 @@ $(document).ready(function () {
     $("#sorteo").prop("checked", data.sorteo == 1);
     $("#evento").prop("checked", data.evento == 1);
     $("#is_vip").prop("checked", data.is_vip == 1);
-    $("#validacionModal").modal("show");
+    $("#editarModal").modal("show");
   });
 
   $("#tablaDatos tbody").on("click", ".registradoBtn", function () {
@@ -306,7 +306,7 @@ $(document).ready(function () {
 
   $("#modalAgregarBtn").click(function () {
     limpiar();
-    $("#validacionModal").modal("show");
+    $("#editarModal").modal("show");
   });
 
   $("#confirmarBtn").click(function () {
@@ -343,6 +343,8 @@ function limpiar() {
   $("#estado_direccion").val("");
   $("#codigo_postal").val("");
   $("#sitio_web").val("");
+  $("#code").val("");
+  $("#is_vip").prop("checked", false);
   $("#sorteo").prop("checked", false);
   $("#evento").prop("checked", false);
   $("#buscar_telefono").val("");
