@@ -344,6 +344,7 @@ function limpiar() {
   $("#codigo_postal").val("");
   $("#sitio_web").val("");
   $("#code").val("");
+  $("#meal").val("");
   $("#is_vip").prop("checked", false);
   $("#sorteo").prop("checked", false);
   $("#evento").prop("checked", false);
