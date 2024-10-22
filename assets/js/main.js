@@ -87,6 +87,9 @@ function scanQRCode() {
     fetch(url)
       .then((response) => response.text())
       .then((response) => {
+        takeout.classList.remove('comida_chicken');
+        takeout.classList.remove('comida_west_palm');
+        takeout.classList.remove('comida_the_italian');
         const data = JSON.parse(response);
         const user = data.data;
         id = user.id;
