@@ -139,7 +139,7 @@ button:hover {
 .go-smart,
 .group {
     text-align: right;
-    font-size: xx-small;
+    font-size: x-small;
     padding: 0;
     display: inline; /* Para que estén en la misma línea */
     margin: 0; /* Eliminar márgenes por defecto */
