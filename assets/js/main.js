@@ -114,4 +114,5 @@ function scanQRCode() {
   if (scanning) {
     requestAnimationFrame(scanQRCode);
   }
+  
 }
