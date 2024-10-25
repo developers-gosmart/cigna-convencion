@@ -1,3 +1,5 @@
+@import url(common.css);
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -44,6 +46,7 @@ p {
     text-align: left;
     padding-left: 1rem;
     margin-top: 10px;
+
     span {
         font-size: 20px;
     }
@@ -65,28 +68,12 @@ p {
     color: #45a049;
 }
 
-#message, #by {
+#message {
     font-weight: bold;
     margin: 10px 0;
     padding: 0;
     min-height: 21px;
     text-align: center;
-}
-
-.go-smart {
-    color: #2c5aa0;
-}
-
-.group {
-    color: #ff9046;
-}
-
-#by,
-.go-smart,
-.group {
-    padding: 0;
-    display: inline; /* Para que estén en la misma línea */
-    margin: 0; /* Eliminar márgenes por defecto */
 }
 
 .comida_chicken {
