@@ -1,0 +1,24 @@
+#by {
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 0;
+    min-height: 21px;
+}
+
+.go-smart {
+    color: #2c5aa0;
+}
+
+.group {
+    color: #ff9046;
+}
+
+#by,
+.go-smart,
+.group {
+    text-align: right;
+    font-size: small;
+    padding: 0;
+    display: inline; /* Para que estén en la misma línea */
+    margin: 0; /* Eliminar márgenes por defecto */
+}
