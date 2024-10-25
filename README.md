@@ -6,6 +6,8 @@ Este proyecto es una aplicación web de registro de usuarios
 * html5
 * css
 * javascript
+
+
 **Instalación:**
  1 Abrir Visual Studio: Inicia Visual Studio en tu ordenador.
  2 Ir al menú Git: En la barra de menú superior, busca y selecciona la opción "Git".
