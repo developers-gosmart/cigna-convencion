@@ -110,7 +110,7 @@ $(document).ready(function () {
       },
     ],
     ajax: {
-      url: "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/list",
+      url: "https://wscigna.gscloud.us/ws/suscripcion/list",
       dataSrc: "data",
       data: {
         accion: "obtenerRegistrosPaginados",
@@ -219,7 +219,7 @@ $(document).ready(function () {
     var data = tabla.row($(this).parents("tr")).data();
     if (data.evento == 0) {
       preloader.style.display = "block";
-      const url = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/event";
+      const url = "https://wscigna.gscloud.us/ws/suscripcion/event";
       const params = {
         method: "PUT",
         headers: {
@@ -264,7 +264,7 @@ $(document).ready(function () {
       if (result.isConfirmed) {
         preloader.style.display = "block";
         var data = tabla.row($(this).parents("tr")).data();
-        const url = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion";
+        const url = "https://wscigna.gscloud.us/ws/suscripcion";
         const params = {
           method: "DELETE",
           headers: {
@@ -311,7 +311,7 @@ $(document).ready(function () {
     }
 
     var data = tabla.row($(this).parents("tr")).data();
-    const url = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion";
+    const url = "https://wscigna.gscloud.us/ws/suscripcion";
     const params = {
       method: $("#registroId").val() != "" ? "PUT" : "POST",
       headers: {

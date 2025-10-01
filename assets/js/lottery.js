@@ -2,7 +2,7 @@ const lotteryButton = document.getElementById('lottery-button');
 const winner = document.getElementById('winner');
 
 lotteryButton.addEventListener("click", () => {
-    const url = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/lottery";
+    const url = "https://wscigna.gscloud.us/ws/suscripcion/lottery";
 
     winner.textContent = '';
 

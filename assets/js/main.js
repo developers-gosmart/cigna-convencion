@@ -14,7 +14,7 @@ var oldCode = "";
 let scanning = false;
 
 registerButton.addEventListener("click", () => {
-  const url = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/event";
+  const url = "https://wscigna.gscloud.us/ws/suscripcion/event";
   const params = {
     method: "PUT",
     headers: {
@@ -75,7 +75,7 @@ function scanQRCode() {
     if (oldCode === data) return;
     else oldCode = data;
 
-    let baseUrl = "https://wscigna.gosmartcrm.com:9000/ws/suscripcion/code";
+    let baseUrl = "https://wscigna.gscloud.us/ws/suscripcion/code";
     let params = {
       code: data,
     };
@@ -114,5 +114,5 @@ function scanQRCode() {
   if (scanning) {
     requestAnimationFrame(scanQRCode);
   }
-  
+
 }
