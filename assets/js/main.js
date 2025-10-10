@@ -27,14 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
    * Agrega un mensaje al div de log.
    * @param {string} msg - El mensaje a loguear.
    */
-  function logFetch(msg) {
-    if (!fetchLog) return; // Chequeo de seguridad
-
+function logFetch(msg) {
+    if (!fetchLog) {
+        console.log("fetchLog no encontrado en el DOM");
+        return;
+    }
     const now = new Date().toLocaleTimeString();
     fetchLog.innerHTML += `<p style="margin: 0; padding: 2px 0;">[${now}] ${msg}</p>`;
-    // Desplazar hacia abajo
     fetchLog.scrollTop = fetchLog.scrollHeight;
-  }
+}
 
   /**
    * Limpia y actualiza los campos de información del usuario.
