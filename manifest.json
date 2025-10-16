@@ -1,7 +1,7 @@
 {
-    "name": "Cigna - 4ta CONVENCIÓN",
-    "short_name": "Cigna",
-    "description": "4ta CONVENCIÓN WEST PALM - FL OCTUBRE 2024",
+    "name": "Empower Diamond - 4ra CONVENCIÓN",
+    "short_name": "Empower Diamond",
+    "description": "4ra CONVENCIÓN WEST PALM - FL OCTUBRE 2025",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
@@ -34,5 +34,5 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#4CAF50"
+    "theme_color": "#58006A"
 }
