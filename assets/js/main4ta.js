@@ -77,8 +77,6 @@ const canvas = document.getElementById('canvas');
 const stopButton = document.getElementById('stopButton');
 const manualSection = document.getElementById('manualSection');
 const scanButton = document.getElementById('scanButton');
-const phoneInput = document.getElementById('phoneInput');
-const searchButton = document.getElementById('searchButton');
 const errorMessage = document.getElementById('errorMessage');
 
 // Inicializar
@@ -118,12 +116,6 @@ statsToggle.addEventListener('click', toggleStats);
 nextButton.addEventListener('click', resetResult);
 scanButton.addEventListener('click', startCamera);
 stopButton.addEventListener('click', stopCamera);
-searchButton.addEventListener('click', handleManualSearch);
-phoneInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        handleManualSearch();
-    }
-});
 
 // Funciones PWA
 function setupPWA() {
@@ -382,12 +374,10 @@ function registrarAsistencia(codigo) {
         showResult({ success: true, agente });
         stopCamera();
         manualEntry = '';
-        phoneInput.value = '';
     } else if (agente && agente.registrado) {
         showResult({ success: false, message: 'Este agente ya fue registrado', agente });
         stopCamera();
         manualEntry = '';
-        phoneInput.value = '';
     }
 }
 
@@ -440,20 +430,6 @@ function resetResult() {
     resultCard.classList.add('hidden');
     scannerSection.classList.remove('hidden');
     hideError();
-}
-
-function handleManualSearch() {
-    manualEntry = phoneInput.value.trim();
-    if (manualEntry) {
-        // Para búsqueda manual, usar la base de datos local
-        const agente = buscarAgente(manualEntry);
-        if (agente) {
-            registrarAsistencia(manualEntry);
-        } else {
-            showError('Agente no encontrado en la base de datos');
-            resultCard.classList.add('hidden');
-        }
-    }
 }
 
 function showError(message) {
