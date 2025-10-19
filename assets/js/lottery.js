@@ -11,8 +11,11 @@ lotteryButton.addEventListener("click", () => {
         .then((response) => {
             const data = JSON.parse(response);
             if (data.code == 200) {
-                winner.textContent = `${data.data.nombre
-                    } ${data.data.apellido}`;
+                winner.textContent = `${data.data.nombre} ${data.data.apellido}`;
             }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            winner.textContent = 'Error al obtener ganador';
         });
 });
