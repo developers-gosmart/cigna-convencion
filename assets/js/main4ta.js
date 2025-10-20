@@ -1,33 +1,5 @@
 // Simulación de base de datos
-const DATABASE = {
-    '4074506676': {
-        nombre: 'AINOHA IZA',
-        telefono: '4074506676',
-        email: 'kdiaz@plusinsurance.us',
-        vip: true,
-        comida: 'WEST PALM BOX LUNCH',
-        registrado: false,
-        horaRegistro: null
-    },
-    '1234567890': {
-        nombre: 'Juan Pérez',
-        telefono: '1234567890',
-        email: 'juan@empower.com',
-        vip: false,
-        comida: 'STANDARD LUNCH',
-        registrado: false,
-        horaRegistro: null
-    },
-    '5551234567': {
-        nombre: 'María García',
-        telefono: '5551234567',
-        email: 'maria@empower.com',
-        vip: true,
-        comida: 'MIAMI BOX LUNCH',
-        registrado: false,
-        horaRegistro: null
-    }
-};
+const DATABASE = {};
 
 // Variables de estado
 let scanning = false;
@@ -177,12 +149,18 @@ function showMessage(message) {
 
 // Funciones de la aplicación
 function updateStats() {
-    const total = Object.keys(DATABASE).length;
-    const checked = Object.values(DATABASE).filter(a => a.registrado).length;
-    stats = { total, checked };
+    // Usar los datos de la API si están disponibles
+    if (stats.apiData) {
+        checkedCount.textContent = stats.apiData.attended_count || 0;
+        totalCount.textContent = stats.apiData.total_count || 0;
+    } else {
+        // Fallback a los datos locales
+        const total = Object.keys(DATABASE).length;
+        const checked = Object.values(DATABASE).filter(a => a.registrado).length;
 
-    checkedCount.textContent = checked;
-    totalCount.textContent = total;
+        checkedCount.textContent = checked;
+        totalCount.textContent = total;
+    }
 }
 
 function toggleStats() {
@@ -290,6 +268,12 @@ async function fetchUserData(code) {
         console.log('Respuesta completa de la API:', responseData);
 
         if (responseData.code === 200 && responseData.data) {
+            // Guardar estadísticas de la API
+            stats.apiData = {
+                attended_count: responseData.data.attended_count,
+                total_count: responseData.data.total_count
+            };
+
             // Convertir los datos de la API al formato interno de la aplicación
             const agente = {
                 nombre: responseData.data.nombre_completo,
@@ -348,7 +332,7 @@ function displayUserData(agente) {
             agente: DATABASE[telefono]
         });
 
-        // Actualizar estadísticas
+        // Actualizar estadísticas con datos de la API
         updateStats();
     }
 }

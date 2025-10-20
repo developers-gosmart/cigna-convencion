@@ -174,6 +174,7 @@ $(document).ready(function () {
                 </button>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item editarBtn" href="#">Editar</a></li>
+                  <li><a class="dropdown-item emailBtn" href="#">Enviar correo</a></li>
                   <li><a class="dropdown-item eliminarBtn" href="#">Eliminar</a></li>
                 </ul>
               </div>
@@ -184,6 +185,41 @@ $(document).ready(function () {
     drawCallback: function (settings) {
       console.log(settings.json);
     },
+  });
+
+  $("#tablaDatos tbody").on("click", ".emailBtn", function () {
+    const url = "https://wscigna.gscloud.us/ws/suscripcion/sendemail";
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: data.id,
+      }),
+    };
+
+    fetch(url, params)
+      .then((response) => response.text())
+      .then((response) => {
+        preloader.style.display = "none";
+        const data = JSON.parse(response);
+        if (data.code == 200) {
+          tabla.ajax.reload();
+          Swal.fire({
+            title: "exitoso",
+            text: "Se envio exitosamente",
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            text: "Hubo un error en la petición",
+            icon: "error",
+          });
+        }
+        preloader.style.display = "none";
+      });
   });
 
   $("#tablaDatos tbody").on("click", ".editarBtn", function () {
