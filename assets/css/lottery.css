@@ -53,10 +53,20 @@ h1 {
     font-size: 6rem;
     color: #d4af37;
     margin: 1.5rem 0;
-    min-height: 4rem;
+    /* La propiedad min-height: 4rem; no es suficiente. */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     font-family: 'Shadows Into Light', cursive;
     margin-bottom: 2rem;
+
+    /* 💥 LA SOLUCIÓN: Establecer una altura fija y centrar el texto */
+    height: 10rem;
+    /* Reserva el espacio necesario para el texto de 6rem */
+    display: flex;
+    /* Permite centrar el contenido */
+    justify-content: center;
+    /* Centra horizontalmente */
+    align-items: center;
+    /* Centra verticalmente */
 }
 
 h2 {
@@ -80,9 +90,9 @@ button {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     font-weight: 700;
     letter-spacing: 1px;
-    width: auto; /* Asegura que no ocupe todo el ancho */
-    display: inline-block; /* Para que respete el ancho automático */
-    max-width: 80%; /* Limita el ancho máximo */
+    width: auto;
+    display: inline-block;
+    max-width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -164,6 +174,8 @@ footer p {
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
+        height: 5rem;
+        /* Ajustar altura fija para pantallas más pequeñas */
     }
 
     h2 {
@@ -173,7 +185,7 @@ footer p {
     button {
         font-size: 2rem;
         padding: 15px 30px;
-        max-width: 90%; /* Ajuste para pantallas más pequeñas */
+        max-width: 90%;
     }
 
     .container {
@@ -184,6 +196,8 @@ footer p {
 @media (max-width: 480px) {
     h1 {
         font-size: 2rem;
+        height: 4rem;
+        /* Ajustar altura fija para pantallas muy pequeñas */
     }
 
     h2 {
@@ -193,6 +207,6 @@ footer p {
     button {
         font-size: 1.5rem;
         padding: 12px 25px;
-        max-width: 95%; /* Ajuste para pantallas muy pequeñas */
+        max-width: 95%;
     }
 }
