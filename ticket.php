@@ -82,7 +82,7 @@ $qr_loaded_successfully = false;
 
 // --- Variables para el Background ---
 // URL de la imagen de fondo (WebP)
-$bg_image_url = 'https://firebasestorage.googleapis.com/v0/b/test-2-12b91.appspot.com/o/imagenes%2Fbackground_lottery.webp?alt=media&token=da24d40f-c00d-4aa9-8471-130d8bc383c0';
+$bg_image_url = 'https://firebasestorage.googleapis.com/v0/b/test-2-12b91.appspot.com/o/imagenes%2Fversion%20ticket%20%20EMPOWER_EVENTO%20final-02-02.png?alt=media&token=3b123234-3834-4a7b-a2fc-d0b493328c8e';
 // --- NOTA: WebP puede fallar en Image(). Si falla, cambiar a .png o .jpg ---
 $temp_bg_file = $temp_dir . 'bg_' . $agente_id . '.webp';
 $bg_loaded_successfully = false;

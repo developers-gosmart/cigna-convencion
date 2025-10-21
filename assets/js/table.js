@@ -175,6 +175,7 @@ $(document).ready(function () {
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item editarBtn" href="#">Editar</a></li>
                   <li><a class="dropdown-item emailBtn" href="#">Enviar correo</a></li>
+                  <li><a class="dropdown-item smsBtn" href="#">Enviar SMS</a></li>
                   <li><a class="dropdown-item eliminarBtn" href="#">Eliminar</a></li>
                 </ul>
               </div>
@@ -191,7 +192,43 @@ $(document).ready(function () {
     var data = tabla.row($(this).parents("tr")).data();
     const url = "https://wscigna.gscloud.us/ws/suscripcion/sendemail";
     const params = {
-      method: "PUT",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: data.id,
+      }),
+    };
+
+    fetch(url, params)
+      .then((response) => response.text())
+      .then((response) => {
+        preloader.style.display = "none";
+        const data = JSON.parse(response);
+        if (data.code == 200) {
+          tabla.ajax.reload();
+          Swal.fire({
+            title: "exitoso",
+            text: "Se envio exitosamente",
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            text: "Hubo un error en la petición",
+            icon: "error",
+          });
+        }
+        preloader.style.display = "none";
+      });
+  });
+
+  $("#tablaDatos tbody").on("click", ".smsBtn", function () {
+    var data = tabla.row($(this).parents("tr")).data();
+    const url = "https://wscigna.gscloud.us/ws/suscripcion/sendsms";
+    const params = {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
