@@ -92,7 +92,7 @@ $bg_loaded_successfully = false;
 // BÚSQUEDA DE DATOS DEL AGENTE
 // ----------------------------------------------------
 $sql = "SELECT s.nombre, s.code, s.type_tickets, i.imagen 
-        FROM suscripcion_2024 s 
+        FROM suscripcion_2025 s 
         INNER JOIN imagenes i ON i.id_suscriptor = s.id 
         WHERE s.id = ?";
 

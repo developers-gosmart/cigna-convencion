@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# --- Evitar interferir con archivos o directorios existentes ---
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# --- Redirigir solo si la URL es un número (por ejemplo /671) ---
+RewriteRule ^([0-9]+)$ ticket.php?id=$1 [L,QSA]
