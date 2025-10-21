@@ -53,7 +53,7 @@
           <th>Sorteo</th>
           <th>Comida</th>
           <th>VIP</th>
-          <th>Evento</th>
+          <th>Entrada</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -221,16 +221,26 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group mb-3">
                   <label for="nombre">C&oacute;digo unico QR</label>
                   <input type="text" class="form-control" maxlength="32" id="code" name="code" />
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group mb-3">
                   <label for="nombre">Comida</label>
                   <input type="text" class="form-control" maxlength="128" id="meal" name="meal" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="type_tickets">Type Tickets</label>
+                  <select class="form-select" id="type_tickets">
+                    <option value="GOLD DIAMOND">GOLD DIAMOND</option>
+                    <option value="POWER DIAMOND">POWER DIAMOND</option>
+                    <option value="SILVER DIAMOND">SILVER DIAMOND</option>
+                  </select>
                 </div>
               </div>
             </div>

@@ -151,12 +151,7 @@ $(document).ready(function () {
           return data.is_vip == 1 ? "Si" : "No";
         },
       },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return data.evento == 1 ? "Registrado" : "Registrar";
-        },
-      },
+      { data: "type_tickets", visible: true },
       {
         data: null,
         render: function (data, type, row) {
@@ -283,6 +278,7 @@ $(document).ready(function () {
     $("#estado_direccion").val(data.estado_direccion);
     $("#codigo_postal").val(data.codigo_postal);
     $("#sitio_web").val(data.sitio_web);
+    $("#type_tickets").val(data.type_tickets);
     $("#sorteo").prop("checked", data.sorteo == 1);
     $("#evento").prop("checked", data.evento == 1);
     $("#is_vip").prop("checked", data.is_vip == 1);
@@ -412,6 +408,7 @@ $(document).ready(function () {
         estado_direccion: $("#estado_direccion").val(),
         codigo_postal: $("#codigo_postal").val(),
         sitio_web: $("#sitio_web").val(),
+        type_tickets: $("#type_tickets").val(),
         sorteo: $("#sorteo").is(":checked") ? 1 : 0,
         evento: $("#evento").is(":checked") ? 1 : 0,
         is_vip: $("#is_vip").is(":checked") ? 1 : 0,
@@ -513,6 +510,7 @@ function limpiar() {
   $("#sitio_web").val("");
   $("#code").val("");
   $("#meal").val("");
+  $("#type_tickets").val("GOLD DIAMOND");
   $("#is_vip").prop("checked", false);
   $("#sorteo").prop("checked", false);
   $("#evento").prop("checked", false);
