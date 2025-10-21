@@ -27,7 +27,9 @@ function generateRandomText() {
 
 // Función principal de sorteo
 lotteryButton.addEventListener("click", () => {
-    const url = "https://wscigna.gscloud.us/ws/suscripcion/lottery";
+    const viewParam = lotteryButton.getAttribute('data-view');
+    const urlBase = "https://wscigna.gscloud.us/ws/suscripcion/lottery";
+    const url = viewParam ? `${urlBase}?vip=${viewParam}` : urlBase;
 
     // 1. Limpiar el texto y empezar el efecto de parpadeo (si tu CSS lo maneja)
     winnerElement.textContent = '';
@@ -64,7 +66,7 @@ lotteryButton.addEventListener("click", () => {
 
                 // Reactivar el botón
                 lotteryButton.disabled = false;
-            }, 5000); // 5000 milisegundos = 5 segundos
+            }, 3000); // 5000 milisegundos = 5 segundos
         })
         .catch((error) => {
             console.error('Error:', error);
