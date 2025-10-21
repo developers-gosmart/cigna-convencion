@@ -334,15 +334,13 @@ $(document).ready(function () {
       if (result.isConfirmed) {
         preloader.style.display = "block";
         var data = tabla.row($(this).parents("tr")).data();
-        const url = "https://wscigna.gscloud.us/ws/suscripcion";
+        const url = `https://wscigna.gscloud.us/ws/suscripcion/${data.id}`;
+
         const params = {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            id: data.id,
-          }),
         };
 
         fetch(url, params)
