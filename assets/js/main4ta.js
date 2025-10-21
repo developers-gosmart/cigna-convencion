@@ -38,7 +38,6 @@ const resultName = document.getElementById('resultName');
 const resultPhone = document.getElementById('resultPhone');
 const resultEmail = document.getElementById('resultEmail');
 const vipBadge = document.getElementById('vipBadge');
-const generalBadge = document.getElementById('generalBadge');
 const foodBadge = document.getElementById('foodBadge');
 const resultTime = document.getElementById('resultTime');
 const nextButton = document.getElementById('nextButton');
@@ -388,13 +387,16 @@ function showResult(resultData) {
     resultPhone.textContent = resultData.agente.telefono;
     resultEmail.textContent = resultData.agente.email;
 
-    if (resultData.agente.vip) {
-        vipBadge.classList.remove('hidden');
-        generalBadge.classList.add('hidden');
-    } else {
-        vipBadge.classList.add('hidden');
-        generalBadge.classList.remove('hidden');
-    }
+    // ⭐️ INICIO DEL CÓDIGO MODIFICADO PARA MOSTRAR SOLO EL VALOR
+
+    // Aseguramos que la insignia 'vip' esté visible para mostrar el valor
+    vipBadge.classList.remove('hidden');
+
+    // Obtenemos el valor del ticket y lo mostramos directamente
+    const ticketType = resultData.agente.type_tickets || 'TIPO NO DEFINIDO';
+    vipBadge.textContent = '🎟️ ENTRADA ' + ticketType;
+
+    // ⭐️ FIN DEL CÓDIGO MODIFICADO
 
     foodBadge.textContent = '🍴 ' + resultData.agente.comida;
 
