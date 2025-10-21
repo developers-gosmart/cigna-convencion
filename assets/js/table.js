@@ -188,6 +188,7 @@ $(document).ready(function () {
   });
 
   $("#tablaDatos tbody").on("click", ".emailBtn", function () {
+    var data = tabla.row($(this).parents("tr")).data();
     const url = "https://wscigna.gscloud.us/ws/suscripcion/sendemail";
     const params = {
       method: "PUT",
