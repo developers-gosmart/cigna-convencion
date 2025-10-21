@@ -202,7 +202,7 @@ $(document).ready(function () {
         preloader.style.display = "none";
         const data = JSON.parse(response);
         if (data.code == 200) {
-          tabla.ajax.reload();
+          tabla.ajax.reload(null, false);
           Swal.fire({
             title: "exitoso",
             text: "Se envio exitosamente",
@@ -238,7 +238,7 @@ $(document).ready(function () {
         preloader.style.display = "none";
         const data = JSON.parse(response);
         if (data.code == 200) {
-          tabla.ajax.reload();
+          tabla.ajax.reload(null, false);
           Swal.fire({
             title: "exitoso",
             text: "Se envio exitosamente",
@@ -306,7 +306,7 @@ $(document).ready(function () {
           preloader.style.display = "none";
           const data = JSON.parse(response);
           if (data.code == 200) {
-            tabla.ajax.reload();
+            tabla.ajax.reload(null, false);
             Swal.fire({
               title: "exitoso",
               text: "Se registro exitosamente",
@@ -348,7 +348,7 @@ $(document).ready(function () {
           .then((response) => {
             const data = JSON.parse(response);
             if (data.code == 200) {
-              tabla.ajax.reload();
+              tabla.ajax.reload(null, false);
               console.log("despues", response);
               preloader.style.display = "none";
               Swal.fire({
@@ -418,7 +418,7 @@ $(document).ready(function () {
       .then((response) => {
         const data = JSON.parse(response);
         if (data.code == 200) {
-          tabla.ajax.reload();
+          tabla.ajax.reload(null, false);
           console.log("despues", response);
           preloader.style.display = "none";
           Swal.fire({
