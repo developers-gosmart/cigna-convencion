@@ -280,6 +280,7 @@ async function fetchUserData(code) {
                 email: responseData.data.email,
                 vip: responseData.data.is_vip === 1,
                 comida: responseData.data.meal,
+                type_tickets: responseData.data.type_tickets,
                 registrado: false,
                 horaRegistro: null
             };
@@ -393,6 +394,7 @@ function showResult(resultData) {
     vipBadge.classList.remove('hidden');
 
     // Obtenemos el valor del ticket y lo mostramos directamente
+    console.log('Tipo de ticket obtenido:', resultData.agente.type_tickets, resultData.agente);
     const ticketType = resultData.agente.type_tickets || 'TIPO NO DEFINIDO';
     vipBadge.textContent = '🎟️ ENTRADA ' + ticketType;
 
