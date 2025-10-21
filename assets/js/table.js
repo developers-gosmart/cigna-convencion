@@ -334,7 +334,7 @@ $(document).ready(function () {
       if (result.isConfirmed) {
         preloader.style.display = "block";
         var data = tabla.row($(this).parents("tr")).data();
-        const url = `https://wscigna.gscloud.us/ws/suscripcion/id=${data.id}`;
+        const url = `https://wscigna.gscloud.us/ws/suscripcion?id=${data.id}`;
 
         const params = {
           method: "DELETE",
