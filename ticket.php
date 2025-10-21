@@ -53,6 +53,14 @@ function displayError($title, $message)
   exit;
 }
 
+function truncarTexto($texto, $maxCaracteres = 25)
+{
+  if (mb_strlen($texto, 'UTF-8') > $maxCaracteres) {
+    return mb_substr($texto, 0, $maxCaracteres, 'UTF-8') . '...';
+  }
+  return $texto;
+}
+
 // Crear conexión
 $conn = new mysqli($host, $user, $pass, $dbname);
 
@@ -116,7 +124,8 @@ if ($result->num_rows === 0) {
 }
 
 $agente = $result->fetch_assoc();
-$agente_nombre = htmlspecialchars($agente['nombre']);
+
+$agente_nombre = truncarTexto(htmlspecialchars($agente['nombre']), 25);
 $agente_code = $agente['code'];
 $agente_ticket = htmlspecialchars($agente['type_tickets']);
 $qr_image_url = $agente['imagen'];
