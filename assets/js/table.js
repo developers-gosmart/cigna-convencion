@@ -63,15 +63,6 @@ const estados = [
 ];
 
 $(document).ready(function () {
-  $("#buscar_telefono").keydown(function (event) {
-    if (event.keyCode == 13) {
-      event.preventDefault(); // Esto evita que se realice la acción por defecto del "Enter" en el input
-      if (event.target.value == "12369") {
-        $("#editarModal").modal("show");
-        $("#validacionModal").modal("hide");
-      }
-    }
-  });
 
   var tabla = $("#tablaDatos").DataTable({
     processing: true,
@@ -106,6 +97,13 @@ $(document).ready(function () {
         text: "Asistencia",
         action: function (e, dt, node, config) {
           calcAsistencia();
+        },
+      },
+      {
+        text: "Type Tickets",
+        action: function (e, dt, node, config) {
+          // Mostrar modal de validación antes de abrir la modal de type tickets
+          $("#validacionModal").modal("show");
         },
       },
     ],
@@ -429,7 +427,7 @@ $(document).ready(function () {
         } else {
           Swal.fire({
             title: "Error",
-            text: "Hubo un error en la petición",
+            text: data.message,
             icon: "error",
           });
         }
@@ -442,13 +440,6 @@ $(document).ready(function () {
   $("#modalAgregarBtn").click(function () {
     limpiar();
     $("#editarModal").modal("show");
-  });
-
-  $("#confirmarBtn").click(function () {
-    if ($("#buscar_telefono").val() == "12369") {
-      $("#editarModal").modal("show");
-      $("#validacionModal").modal("hide");
-    }
   });
 
   function calcAsistencia() {
@@ -475,6 +466,82 @@ $(document).ready(function () {
       });
     });
   }
+
+  // Validación del código para abrir la modal de type tickets
+  $("#buscar_telefono").keydown(function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      validarCodigo();
+    }
+  });
+
+  $("#confirmarBtn").click(function () {
+    validarCodigo();
+  });
+
+  function validarCodigo() {
+    if ($("#buscar_telefono").val() == "12369") {
+      $("#validacionModal").modal("hide");
+      $("#typeTicketsModal").modal("show");
+      $("#buscar_telefono").val(""); // Limpiar campo
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "Código incorrecto",
+        icon: "error",
+      });
+    }
+  }
+
+  // Enviar mensaje desde la modal de type tickets
+  $("#enviarMensajeBtn").click(function () {
+    const typeTickets = $("#type_tickets_select").val();
+    const mensaje = $("#mensaje_texto").val();
+
+    if (!mensaje) {
+      Swal.fire({
+        title: "Advertencia",
+        text: "Por favor, escriba un mensaje",
+        icon: "warning",
+      });
+      return;
+    }
+
+    const url = "https://wscigna.gscloud.us/ws/suscripcion/sendsmsmassive";
+    const params = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type_tickets: typeTickets,
+        message: mensaje,
+      }),
+    };
+
+    fetch(url, params)
+      .then((response) => response.text())
+      .then((response) => {
+        const data = JSON.parse(response);
+        if (data.code == 200) {
+          tabla.ajax.reload(null, false);
+          console.log("despues", response);
+          preloader.style.display = "none";
+          Swal.fire({
+            title: "exitoso",
+            text: mensaje,
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            text: data.message,
+            icon: "error",
+          });
+        }
+      });
+
+  });
 
   llenarSelects();
 
