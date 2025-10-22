@@ -126,10 +126,10 @@ $(document).ready(function () {
           return completarConCeros(data.id);
         },
       },
+      { data: "code" },
       { data: "nombre" },
       { data: "inicial_segundo_nombre", visible: false },
       { data: "apellido" },
-      { data: "codigo_cigna", visible: false },
       { data: "ciudad", visible: false },
       { data: "estado", visible: false },
       { data: "nacionalidad", visible: false },
