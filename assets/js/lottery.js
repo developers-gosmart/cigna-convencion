@@ -49,24 +49,17 @@ lotteryButton.addEventListener("click", () => {
         .then((response) => {
             const data = JSON.parse(response);
 
-            // 5. Establecer un temporizador para detener el efecto y mostrar el ganador final después de 5 segundos
-            setTimeout(() => {
-                // Detener el intervalo de texto aleatorio
-                clearInterval(intervalId);
+            clearInterval(intervalId);
 
-                // Mostrar el ganador real
-                if (data.code == 200) {
-                    winnerElement.textContent = truncarTexto(`${data.data.nombre} ${data.data.apellido}`);
-                } else {
-                    winnerElement.textContent = 'Error al obtener ganador';
-                }
+            // Mostrar el ganador real
+            if (data.code == 200) {
+                winnerElement.textContent = truncarTexto(`${data.data.nombre} ${data.data.apellido}`);
+            } else {
+                winnerElement.textContent = 'Error al obtener ganador';
+            }
 
-                // Detener el parpadeo
-                winnerElement.classList.remove('parpadea');
-
-                // Reactivar el botón
-                lotteryButton.disabled = false;
-            }, 3000); // 5000 milisegundos = 5 segundos
+            // Detener el parpadeo
+            winnerElement.classList.remove('parpadea');
         })
         .catch((error) => {
             console.error('Error:', error);
