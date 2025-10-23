@@ -31,16 +31,9 @@ lotteryButton.addEventListener("click", () => {
     const urlBase = "https://wscigna.gscloud.us/ws/suscripcion/lottery";
     const url = viewParam ? `${urlBase}?vip=${viewParam}` : urlBase;
 
-    // 1. Limpiar el texto y empezar el efecto de parpadeo (si tu CSS lo maneja)
     winnerElement.textContent = '';
     winnerElement.classList.add('parpadea'); // Asegura que el parpadeo esté activo
 
-    // 2. Iniciar el efecto de conteo rápido (cada 50ms)
-    intervalId = setInterval(() => {
-        winnerElement.textContent = generateRandomText();
-    }, 50);
-
-    // 3. Desactivar el botón para evitar clics múltiples durante el sorteo
     lotteryButton.disabled = true;
 
     // 4. Realizar la solicitud de la API
